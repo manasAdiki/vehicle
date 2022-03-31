@@ -1,12 +1,17 @@
-package main
+package charging_station
 
 import (
 	"encoding/json"
 	"fmt"
+	"golang-api/Errors"
 	"io/ioutil"
 	"log"
 	"net/http"
+
+	"golang-api/model"
 )
+
+var API model.Vehicle
 
 func Getstations(w http.ResponseWriter, r *http.Request) {
 
@@ -21,15 +26,15 @@ func Getstations(w http.ResponseWriter, r *http.Request) {
 		http.MethodGet, url, nil,
 	)
 
-	ErrorHandler(err)
+	Errors.ErrorHandler(err)
 
 	res, err := http.DefaultClient.Do(req)
-	ErrorHandler(err)
+	Errors.ErrorHandler(err)
 	responseBytes, err := ioutil.ReadAll(res.Body)
-	ErrorHandler(err)
+	Errors.ErrorHandler(err)
 
 	errr := json.Unmarshal(responseBytes, &API)
-	ErrorHandler(errr)
+	Errors.ErrorHandler(errr)
 
 	json.NewEncoder(w).Encode(API)
 	log.Printf("User Accesed records")

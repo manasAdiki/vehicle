@@ -1,4 +1,4 @@
-package main
+package charging_station
 
 import (
 	"fmt"
